@@ -1,0 +1,33 @@
+<h1>id: <%= @task.id %> のタスク詳細ページ</h1>
+
+<table class="table table-bordered">
+  <tr>
+    <th>id</th>
+    <td><%= @task.id %></td>
+  </tr>
+  <tr>
+    <th>タスク</th>
+    <td><%= @task.subject %></td>
+  </tr>
+  <tr>
+    <th>ステータス</th>
+    <td><%= @task.status %></td>
+  </tr>
+  <tr>
+    <th>内容</th>
+    <td><%= @task.content %></td>
+  </tr> 
+  <tr>
+    <th>作成日</th>
+    <td><%= @task.created_at %></td>
+  </tr>
+  <tr>
+    <th>更新日</th>
+    <td><%= @task.updated_at %></td>
+  </tr>
+</table>
+
+<% if current_user == @task.user %>
+<%= link_to 'このタスクを編集する', edit_task_path(@task), class: 'btn btn-default' %>
+<%= link_to 'このタスクを削除する', @task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger' %>
+<% end %>

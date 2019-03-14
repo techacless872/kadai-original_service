@@ -1,0 +1,13 @@
+   <% unless current_user == user %>
+       <% if current_user.selected?(task) %>
+          <%= form_for(current_user.task_permissions.find_by(task_id: task.id), html: { method: :delete }) do |f| %>
+            <%= hidden_field_tag :task_id, task.id %>
+            <%= f.submit 'unfollow', class: 'btn btn-danger btn-xs' %>
+          <% end %>
+        <% else %>
+          <%= form_for(current_user.task_permissions.build) do |f| %>
+            <%= hidden_field_tag :task_id, task.id %>
+            <%= f.submit 'follow', class: 'btn btn-primary btn-xs' %>
+          <% end %>
+        <% end %>
+   <% end %>

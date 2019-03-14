@@ -1,0 +1,38 @@
+<% if tasks.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>タスク</th>
+        <th>ステータス</th>
+        <th>内容</th>
+        <th>作成日</th>
+        <th>更新日</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tasks.each do |task| %>
+          <% if current_user.selected?(task) %>
+            <tr>
+              <td><%= link_to task.id, task %></td>
+              <td><%= task.subject %></td>
+              <td><%= task.status %></td>
+              <td><%= task.content %></td>
+              <td><%= task.created_at %></td>
+              <td><%= task.updated_at %></td>
+              <td>
+                         <%= form_for(current_user.task_permissions.find_by(task_id: task.id), html: { method: :delete }) do |f| %>
+                          <%= hidden_field_tag :task_id, task.id %>
+                          <%= f.submit 'unfollow', class: 'btn btn-danger btn-xs' %>
+                        <% end %>
+              </td>
+            </tr>
+          <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <div>
+    <%= paginate tasks %>
+  </div>
+<% end %>
